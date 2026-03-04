@@ -6,14 +6,9 @@ Google acts as the Identity Provider (IdP) and the Go server acts as the Service
 
 ---
 
-## Prerequisites
+## How to run
 
-- [Go 1.22+](https://go.dev/dl/)
-- A **Google Cloud project** with OAuth2 credentials
-
----
-
-## 1. Create Google OAuth2 Credentials
+### 1. Create Google OAuth2 Credentials
 
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Create a new project (or select an existing one).
@@ -30,22 +25,9 @@ Google acts as the Identity Provider (IdP) and the Go server acts as the Service
 
 ---
 
-## 2. Configure Environment Variables
+### 2. Configure Environment Variables
 
 Copy the example env file and fill in your credentials:
-
-```sh
-cp .env.example .env
-```
-
-Edit `.env`:
-
-```dotenv
-GOOGLE_CLIENT_ID=your-client-id.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=your-client-secret
-SESSION_SECRET=a-random-32-byte-string-change-me
-PORT=8080
-```
 
 | Variable              | Description                                               |
 |-----------------------|-----------------------------------------------------------|
@@ -58,43 +40,17 @@ PORT=8080
 
 ---
 
-## 3. Install Dependencies
+### 3. Run the Server
 
-```sh
-go mod download
-```
 
----
-
-## 4. Run the Server
-
-```sh
-go run .
-```
-
-You should see:
-
-```
-Server listening on http://localhost:8080
-```
-
----
-
-## 5. Try It Out
-
-Open your browser and navigate to:
-
-```
-http://localhost:8080
-```
-
-You will be automatically redirected through the following flow:
-
-```
-/ → /hello → /login → Google consent screen → /callback → /hello ✅
-```
-
-After a successful login, you'll see the **Hello World** page with your Google name and email.
+1. ```sh go mod download```
+2. ```sh go run .```
+3. Open your browser and navigate to: http://localhost:8080
+4. You will be automatically redirected through the following flow:
+    ```
+    / → /hello → /login → Google consent screen → /callback → /hello ✅
+    ```
+5. After a successful login, you'll see the **Hello World** page with your Google name and email.
 
 ---
 
@@ -113,7 +69,6 @@ After a successful login, you'll see the **Hello World** page with your Google n
 ## Project Structure
 
 ```
-go-test/
 ├── main.go              # Entry point: wires up routes and starts the server
 ├── auth/
 │   └── auth.go          # OAuth2 config, session store, IsAuthenticated helper
@@ -124,9 +79,6 @@ go-test/
 │   └── logout.go        # GET /logout — clears session
 ├── middleware/
 │   └── auth.go          # RequireAuth middleware for protected routes
-├── .env.example         # Template for environment variables
-├── .gitignore
-├── go.mod
-└── go.sum
+...
 ```
 
